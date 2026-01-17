@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Painel Admin - Treinamento Smart</title>
+</head>
+<body>
+<h2>Painel Administrativo - Treinamento Smart</h2>
+
+<input type="text" id="login" placeholder="Login do admin"><br><br>
+<input type="password" id="senha" placeholder="Senha do admin"><br><br>
+<button onclick="loginAdmin()">Entrar</button>
+
+<div id="painel" style="display:none;">
+  <h3>Liberação de Acesso Premium</h3>
+  <input type="text" id="whatsapp" placeholder="WhatsApp do usuário"><br><br>
+  <select id="plano">
+    <option value="30">30 dias</option>
+    <option value="90">3 meses</option>
+    <option value="180">6 meses</option>
+    <option value="365">12 meses</option>
+  </select><br><br>
+  <button onclick="liberar()">Liberar Premium</button>
+</div>
+
+<script>
+const LOGIN_ADMIN = "luizjunior";
+const SENHA_ADMIN = "Lu280816@";
+
+function loginAdmin(){
+  const l = document.getElementById("login").value;
+  const s = document.getElementById("senha").value;
+  if(l === LOGIN_ADMIN && s === SENHA_ADMIN){
+    document.getElementById("painel").style.display = "block";
+  } else {
+    alert("Login ou senha incorretos");
+  }
+}
+
+function liberar(){
+  const w = document.getElementById("whatsapp").value;
+  const d = document.getElementById("plano").value;
+  const agora = new Date().getTime();
+  const validade = agora + d*24*60*60*1000;
+  let users = JSON.parse(localStorage.getItem("usuarios_premium")) || {};
+  users[w] = validade;
+  localStorage.setItem("usuarios_premium", JSON.stringify(users));
+  alert("Acesso liberado com sucesso!");
+}
+</script>
+</body>
+</html>
